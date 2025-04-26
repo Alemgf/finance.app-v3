@@ -708,7 +708,7 @@ export function BankAccountManager() {
 
       {/* Add Account Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Adicionar Conta Bancária</DialogTitle>
           </DialogHeader>
@@ -970,7 +970,7 @@ export function BankAccountManager() {
               </>
             )}
           </div>
-          <DialogFooter>
+          <DialogFooter className="sticky bottom-0 bg-background pt-2 pb-2">
             <Button type="button" variant="outline" onClick={handleCloseAddDialog}>
               Cancelar
             </Button>
@@ -983,7 +983,7 @@ export function BankAccountManager() {
 
       {/* Edit Account Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Editar Conta Bancária</DialogTitle>
           </DialogHeader>
@@ -1251,7 +1251,7 @@ export function BankAccountManager() {
               </>
             )}
           </div>
-          <DialogFooter>
+          <DialogFooter className="sticky bottom-0 bg-background pt-2 pb-2">
             <Button type="button" variant="outline" onClick={handleCloseEditDialog}>
               Cancelar
             </Button>

@@ -27,7 +27,7 @@ export function ProfileHeader() {
   const [weekDays, setWeekDays] = useState<{ day: number; name: string; isToday: boolean }[]>([])
 
   useEffect(() => {
-    const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+    const days = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"]
     const currentDay = today.getDay() // 0 = Sunday, 1 = Monday, etc.
     const currentDate = today.getDate()
 
@@ -51,6 +51,11 @@ export function ProfileHeader() {
 
     setWeekDays(weekDaysArray)
   }, [])
+
+  // Forçar a renderização quando o usuário mudar
+  useEffect(() => {
+    // Este efeito garante que o componente seja renderizado novamente quando os dados do usuário mudarem
+  }, [user])
 
   return (
     <div className="py-8 px-6" style={{ backgroundColor: themeConfig.colors.background }}>

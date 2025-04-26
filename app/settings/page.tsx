@@ -14,7 +14,7 @@ import { themeConfig } from "@/lib/theme-config"
 import { BottomMenu } from "@/components/bottom-menu"
 
 export default function SettingsPage() {
-  const { user, signOut, updateProfile } = useAuth()
+  const { user, loading, signOut, updateProfile } = useAuth()
 
   // Estados para o perfil
   const [selectedAvatar, setSelectedAvatar] = useState<string>("👤")
@@ -57,9 +57,9 @@ export default function SettingsPage() {
     }
   }, [isEditingQuote])
 
-  const handleSaveName = () => {
+  const handleSaveName = async () => {
     if (userName.trim()) {
-      updateProfile({ name: userName })
+      await updateProfile({ name: userName })
       setIsEditingName(false)
       toast({
         title: "Nome atualizado",
@@ -79,8 +79,8 @@ export default function SettingsPage() {
     setIsEditingName(false)
   }
 
-  const handleSaveQuote = () => {
-    updateProfile({ motivationalQuote })
+  const handleSaveQuote = async () => {
+    await updateProfile({ motivationalQuote })
     setIsEditingQuote(false)
     toast({
       title: "Frase motivacional atualizada",
@@ -124,15 +124,50 @@ export default function SettingsPage() {
     })
   }
 
-  const handleAvatarSelect = (emoji: string) => {
+  const handleAvatarSelect = async (emoji: string) => {
     // Limitar a um único emoji
     const singleEmoji = emoji.slice(0, 2)
     setSelectedAvatar(singleEmoji)
-    updateProfile({ avatar: singleEmoji })
+  }
+
+  const handleSaveAvatar = async () => {
+    await updateProfile({ avatar: selectedAvatar })
+    setIsAvatarDialogOpen(false)
+
+    toast({
+      title: "Avatar atualizado",
+      description: "Seu avatar foi atualizado com sucesso.",
+    })
   }
 
   const handleLogout = async () => {
     await signOut()
+  }
+
+  // Mostrar um indicador de carregamento enquanto os dados do usuário estão sendo carregados
+  if (loading) {
+    return (
+      <div className="container max-w-md mx-auto p-4 flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900 mx-auto mb-4"></div>
+          <p className="text-lg">Carregando...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Se não estiver carregando mas o usuário for null, redirecionar para login
+  if (!user) {
+    return (
+      <div className="container max-w-md mx-auto p-4 flex items-center justify-center h-screen">
+        <div className="text-center">
+          <p className="text-lg mb-4">Você precisa estar logado para acessar esta página.</p>
+          <Link href="/login">
+            <Button>Ir para o login</Button>
+          </Link>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -216,13 +251,7 @@ export default function SettingsPage() {
                   </div>
                   <div className="flex justify-end gap-2 mt-4">
                     <Button
-                      onClick={() => {
-                        toast({
-                          title: "Avatar atualizado",
-                          description: "Seu avatar foi atualizado com sucesso.",
-                        })
-                        setIsAvatarDialogOpen(false)
-                      }}
+                      onClick={handleSaveAvatar}
                       style={{
                         backgroundColor: themeConfig.colors.cardBackgroundDark,
                         color: "white",
