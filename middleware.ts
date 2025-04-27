@@ -18,7 +18,8 @@ export function middleware(request: NextRequest) {
   }
 
   // Se o usuário estiver autenticado e tentar acessar login/register, redirecionar para home
-  if ((request.nextUrl.pathname.startsWith("/login") || request.nextUrl.pathname.startsWith("/register")) && userId) {
+  // Mas apenas se o caminho for exatamente /login ou /register
+  if ((request.nextUrl.pathname === "/login" || request.nextUrl.pathname === "/register") && userId) {
     return NextResponse.redirect(new URL("/", request.url))
   }
 

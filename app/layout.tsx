@@ -3,7 +3,7 @@ import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { FinanceProvider } from "@/lib/finance-context"
-import { AuthProvider } from "@/lib/auth-context"
+import { AuthProvider } from "@/lib/auth" // Importando do novo arquivo auth.tsx
 
 const inter = Inter({ subsets: ["latin"] })
 

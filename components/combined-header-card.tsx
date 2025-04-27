@@ -1,5 +1,5 @@
 "use client"
-import { useAuth } from "@/lib/auth-context"
+import { useAuth } from "@/lib/auth" // Importando do novo arquivo auth.tsx
 import Link from "next/link"
 import { Settings } from "lucide-react"
 
